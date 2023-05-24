@@ -8,6 +8,7 @@ public class Cadastro_de_trecos {
     static Scanner scanner = new Scanner(System.in);
     
     public static void main(String[] args) {
+        clearScreen();
         mainMenu();
     }
        
@@ -84,7 +85,6 @@ public class Cadastro_de_trecos {
     public static void reloadMenu(){
         System.out.println("Opção inválida.");
         mainMenu();
-        
     }
     
     public static void clearScreen(){
