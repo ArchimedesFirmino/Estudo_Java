@@ -1,9 +1,7 @@
-DROP DATABASE IF EXISTS things;
-CREATE DATABASE things CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE things;
+DROP TABLE IF EXISTES things;
 
 CREATE TABLE things (
-    id INT PRIMARY KEY AUTO_INCREMENT,
+    id INT PRIMARY KEY,
     name VARCHAR(63),
     description VARCHAR(127)
 );
