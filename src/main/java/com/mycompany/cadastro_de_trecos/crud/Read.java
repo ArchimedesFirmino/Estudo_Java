@@ -19,7 +19,7 @@ public class Read extends AppSetup {
         try {
 
             // Consulta o banco de dados.
-            String sql = "SELECT * FROM " + DBTABLE;
+            String sql = "SELECT * FROM things";
             conn = DbConnection.dbConnect();
             stmt = conn.createStatement();
             res = stmt.executeQuery(sql);
@@ -112,7 +112,7 @@ public class Read extends AppSetup {
         try {
 
             // Faz consulta no banco de dados usando "preparedStatement".
-            sql = "SELECT * FROM " + DBTABLE + " WHERE id = ?";
+            sql = "SELECT * FROM things WHERE id = ?";
             conn = DbConnection.dbConnect();
             pstm = conn.prepareStatement(sql);
 
@@ -180,3 +180,4 @@ public class Read extends AppSetup {
     }
 
 }
+
