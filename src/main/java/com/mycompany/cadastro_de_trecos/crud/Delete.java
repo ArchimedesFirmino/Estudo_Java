@@ -40,7 +40,7 @@ public class Delete extends AppSetup {
         try {
 
             // Verifica se o registro existe.
-            sql = "SELECT * FROM " + DBTABLE + " WHERE id = ?";
+            sql = "SELECT * FROM " + DBTABLE + " WHERE id = ? AND " + DBFIELDS[5] + " = 2";
             conn = DbConnection.dbConnect();
             pstm = conn.prepareStatement(sql);
             pstm.setInt(1, id);
@@ -50,15 +50,18 @@ public class Delete extends AppSetup {
 
                 // Se tem registro, exibe na view.
                 System.out.println(
-                        "\nID: " + res.getString("id") + "\n"
-                        + "  Nome: " + res.getString("name") + "\n"
-                        + "  Descrição: " + res.getString("description") + "\n"
+                          "ID: " + res.getString(DBFIELDS[0]) + "\n"
+                        + "  Nome: " + res.getString(DBFIELDS[2]) + "\n"
+                        + "  Descrição: " + res.getString(DBFIELDS[3]) + "\n"
+                        + "  Localização: " + res.getString(DBFIELDS[4]) + "\n"
+                        + "  Data de Cadastro: " + res.getString(DBFIELDS[1]) + "\n"
                 );
 
                 System.out.print("Tem certeza que deseja apagar o registro? [s/N] ");
                 if (scanner.next().trim().toLowerCase().equals("s")) {
 
-                    sql = "DELETE FROM " + DBTABLE + " WHERE id = ?";
+                    sql = "UPDATE " + DBTABLE + " SET " + DBFIELDS[5] + " = '0' WHERE id = ?";
+                    System.out.println(id);
                     pstm = conn.prepareStatement(sql);
                     pstm.setInt(1, id);
                     if (pstm.executeUpdate() == 1) {

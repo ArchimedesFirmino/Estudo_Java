@@ -30,16 +30,21 @@ public class Create extends AppSetup {
             System.out.print("\tDescrição: ");
             String itemDescription = keyboard.nextLine().trim();
 
+            // Obtém o nome.
+            System.out.print("\tLocalização: ");
+            String itemLocation = keyboard.nextLine().trim();
+            
             // Pede confirmação.
             System.out.print("\nOs dados acima estão corretos? [s/N] ");
             if (keyboard.next().trim().toLowerCase().equals("s")) {
 
                 // Insere os dados na tabela usando PreparetedStatement.
-                sql = "INSERT INTO " + DBTABLE + " (name, description) VALUES (?, ?)";
+                sql = "INSERT INTO " + DBTABLE + " (" + DBFIELDS[2] + "," + DBFIELDS[3] + "," + DBFIELDS[4] + ") VALUES (?, ?, ?)";
                 conn = DbConnection.dbConnect();
                 pstm = conn.prepareStatement(sql);
                 pstm.setString(1, itemName);
                 pstm.setString(2, itemDescription);
+                pstm.setString(3, itemLocation);
 
                 if (pstm.executeUpdate() == 1) {
 

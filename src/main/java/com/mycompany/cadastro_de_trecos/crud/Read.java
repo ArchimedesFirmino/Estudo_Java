@@ -19,7 +19,7 @@ public class Read extends AppSetup {
         try {
 
             // Consulta o banco de dados.
-            String sql = "SELECT * FROM things";
+            String sql = "SELECT * FROM " + DBTABLE + " WHERE " + DBFIELDS[5] + " != '0' ";
             conn = DbConnection.dbConnect();
             stmt = conn.createStatement();
             res = stmt.executeQuery(sql);
@@ -32,9 +32,11 @@ public class Read extends AppSetup {
 
                     // Exibe registro na view.
                     System.out.println(
-                            "ID: " + res.getString("id") + "\n"
-                            + "  Nome: " + res.getString("name") + "\n"
-                            + "  Descrição: " + res.getString("description") + "\n"
+                            "ID: " + res.getString(DBFIELDS[0]) + "\n"
+                            + "  Nome: " + res.getString(DBFIELDS[2]) + "\n"
+                            + "  Descrição: " + res.getString(DBFIELDS[3]) + "\n"
+                            + "  Localização: " + res.getString(DBFIELDS[4]) + "\n"
+                            + "  Data de Cadastro: " + res.getString(DBFIELDS[1]) + "\n"
                     );
                 } while (res.next());
             } else {
@@ -112,7 +114,7 @@ public class Read extends AppSetup {
         try {
 
             // Faz consulta no banco de dados usando "preparedStatement".
-            sql = "SELECT * FROM things WHERE id = ?";
+            sql = "SELECT * FROM " + DBTABLE + " WHERE id = ? AND status != '0'";
             conn = DbConnection.dbConnect();
             pstm = conn.prepareStatement(sql);
 
@@ -126,10 +128,11 @@ public class Read extends AppSetup {
 
                 // Se tem registro, exibe na view.
                 System.out.println(
-                        "\nID: " + res.getString("id") + "\n"
-                        + "  Nome: " + res.getString("name") + "\n"
-                        + "  "
-                        + "Descrição: " + res.getString("description") + "\n"
+                        "ID: " + res.getString(DBFIELDS[0]) + "\n"
+                        + "  Nome: " + res.getString(DBFIELDS[2]) + "\n"
+                        + "  Descrição: " + res.getString(DBFIELDS[3]) + "\n"
+                        + "  Localização: " + res.getString(DBFIELDS[4]) + "\n"
+                        + "  Data de Cadastro: " + res.getString(DBFIELDS[1]) + "\n"
                 );
             } else {
 
@@ -180,4 +183,3 @@ public class Read extends AppSetup {
     }
 
 }
-

@@ -40,11 +40,14 @@ public class Search extends AppSetup {
 
             // Consulta o banco de dados.
             // sql = "SELECT * FROM " + DBTABLE + " WHERE name LIKE '%" + searchString + "%' OR description LIKE '%" + searchString + "%'";
-            sql = "SELECT * FROM " + DBTABLE + " WHERE name LIKE ? OR description LIKE ?";
+            sql = "SELECT * FROM " + DBTABLE + " WHERE " + DBFIELDS[1] + " LIKE ? OR " + DBFIELDS[2] + " LIKE ? OR " + DBFIELDS[3] + " LIKE ? OR " + DBFIELDS[4] + " LIKE ? AND " + DBFIELDS[5] + " != '0'";
+            System.out.println(sql);
             conn = DbConnection.dbConnect();
             pstm = conn.prepareStatement(sql);
             pstm.setString(1, "%" + searchString + "%");
             pstm.setString(2, "%" + searchString + "%");
+            pstm.setString(3, "%" + searchString + "%");
+            pstm.setString(4, "%" + searchString + "%");
             res = pstm.executeQuery();
 
             System.out.println(" ");
@@ -55,9 +58,11 @@ public class Search extends AppSetup {
 
                     // Exibe registro na view.
                     System.out.println(
-                            "ID: " + res.getString("id") + "\n"
-                            + "  Nome: " + res.getString("name") + "\n"
-                            + "  Descrição: " + res.getString("description") + "\n"
+                            "ID: " + res.getString(DBFIELDS[0]) + "\n"
+                            + "  Nome: " + res.getString(DBFIELDS[2]) + "\n"
+                            + "  Descrição: " + res.getString(DBFIELDS[3]) + "\n"
+                            + "  Localização: " + res.getString(DBFIELDS[4]) + "\n"
+                            + "  Data de Cadastro: " + res.getString(DBFIELDS[1]) + "\n"
                     );
                 } while (res.next());
             } else {

@@ -48,9 +48,11 @@ public class Update extends AppSetup {
 
                 // Se tem registro, exibe na view.
                 System.out.println(
-                        "\nID: " + res.getString("id") + "\n"
-                        + "  Nome: " + res.getString("name") + "\n"
-                        + "  Descrição: " + res.getString("description") + "\n"
+                        "ID: " + res.getString(DBFIELDS[0]) + "\n"
+                        + "  Nome: " + res.getString(DBFIELDS[2]) + "\n"
+                        + "  Descrição: " + res.getString(DBFIELDS[3]) + "\n"
+                        + "  Localização: " + res.getString(DBFIELDS[4]) + "\n"
+                        + "  Data de Cadastro: " + res.getString(DBFIELDS[1]) + "\n"
                 );
 
                 System.out.println("Insira os novos dados ou deixe em branco para manter os atuais:\n");
@@ -61,22 +63,27 @@ public class Update extends AppSetup {
                 System.out.print("\tNome: ");
                 String itemName = keyboard.nextLine().trim();
 
-                System.out.print("\tDescription: ");
+                System.out.print("\tDescrição: ");
                 String itemDescription = keyboard.nextLine().trim();
+                
+                 System.out.print("\tLocalização: ");
+                String itemLocation = keyboard.nextLine().trim();
 
                 // Pede confirmação.
                 System.out.print("\nOs dados acima estão corretos? [s/N] ");
                 if (keyboard.next().trim().toLowerCase().equals("s")) {
 
                     // Short Hand → https://www.w3schools.com/java/java_conditions_shorthand.asp
-                    String saveName = (itemName.equals("")) ? res.getString("name") : itemName;
-                    String saveDescription = (itemDescription.equals("")) ? res.getString("description") : itemDescription;
+                    String saveName = (itemName.equals("")) ? res.getString("nome") : itemName;
+                    String saveDescription = (itemDescription.equals("")) ? res.getString("descricao") : itemDescription;
+                    String saveLocation = (itemDescription.equals("")) ? res.getString("localizacao") : itemDescription;
 
                     // Atualiza registro no banco de dados.
-                    sql = "UPDATE " + DBTABLE + " SET name = ?, description = ? WHERE id = ?";
+                    sql = "UPDATE " + DBTABLE + " SET nome = ?, descricao = ?, localizacao = ?  WHERE id = ?";
                     pstm = conn.prepareStatement(sql);
                     pstm.setString(1, saveName);
                     pstm.setString(2, saveDescription);
+                    pstm.setString(2, saveLocation);
                     pstm.setInt(3, id);
                     if (pstm.executeUpdate() == 1) {
 
