@@ -39,7 +39,7 @@ public class Update extends AppSetup {
         try {
 
             // Obtém o registro solicitado do banco de dados.
-            sql = "SELECT * FROM " + DBTABLE + " WHERE " + DBFIELDS[5] + " != '0' OR '1' AND id = ?";
+            sql = "SELECT * FROM " + DBTABLE + " WHERE " + DBFIELDS[5] + " = '2' AND id = ?";
             conn = DbConnection.dbConnect();
             pstm = conn.prepareStatement(sql);
             pstm.setInt(1, id);
