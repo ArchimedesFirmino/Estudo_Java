@@ -39,7 +39,7 @@ public class Update extends AppSetup {
         try {
 
             // Obtém o registro solicitado do banco de dados.
-            sql = "SELECT * FROM " + DBTABLE + " WHERE id = ?";
+            sql = "SELECT * FROM " + DBTABLE + " WHERE " + DBFIELDS[5] + " != '0' OR '1' AND id = ?";
             conn = DbConnection.dbConnect();
             pstm = conn.prepareStatement(sql);
             pstm.setInt(1, id);
@@ -83,8 +83,8 @@ public class Update extends AppSetup {
                     pstm = conn.prepareStatement(sql);
                     pstm.setString(1, saveName);
                     pstm.setString(2, saveDescription);
-                    pstm.setString(2, saveLocation);
-                    pstm.setInt(3, id);
+                    pstm.setString(3, saveLocation);
+                    pstm.setInt(4, id);
                     if (pstm.executeUpdate() == 1) {
 
                         // Se o registro foi criado.

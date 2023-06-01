@@ -4,6 +4,7 @@ import com.mycompany.cadastro_de_trecos.setup.AppSetup;
 import com.mycompany.cadastro_de_trecos.crud.Read;
 import com.mycompany.cadastro_de_trecos.crud.Create;
 import com.mycompany.cadastro_de_trecos.crud.Delete;
+import com.mycompany.cadastro_de_trecos.crud.LockUnlock;
 import com.mycompany.cadastro_de_trecos.crud.Search;
 import com.mycompany.cadastro_de_trecos.crud.Update;
 
@@ -25,6 +26,7 @@ public class Cadastro_de_trecos extends AppSetup {
         System.out.println("\t[4] Editar");
         System.out.println("\t[5] Apagar");
         System.out.println("\t[6] Pesquisar");
+        System.out.println("\t[7] Bloquear/Desbloquear");
         System.out.println("\t[0] Sair");
         System.out.println(appSep);
         System.out.print("Opção: ");
@@ -61,7 +63,10 @@ public class Cadastro_de_trecos extends AppSetup {
                 clearScreen();
                 Search.search();
                 break;
-                
+            case "7":
+                clearScreen();
+                LockUnlock.lockUnlock();
+                break;
             default:
                 clearScreen();
                 System.out.println("Opção inválida.\n");

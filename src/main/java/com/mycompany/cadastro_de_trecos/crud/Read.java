@@ -5,6 +5,7 @@ import com.mycompany.cadastro_de_trecos.setup.AppSetup;
 import com.mycompany.cadastro_de_trecos.db.DbConnection;
 import static com.mycompany.cadastro_de_trecos.setup.AppSetup.*;
 import static com.mycompany.cadastro_de_trecos.Cadastro_de_trecos.*;
+import static com.mycompany.cadastro_de_trecos.Tools.showRes;
 
 public class Read extends AppSetup {
 
@@ -31,13 +32,8 @@ public class Read extends AppSetup {
                 do {
 
                     // Exibe registro na view.
-                    System.out.println(
-                            "ID: " + res.getString(DBFIELDS[0]) + "\n"
-                            + "  Nome: " + res.getString(DBFIELDS[2]) + "\n"
-                            + "  Descrição: " + res.getString(DBFIELDS[3]) + "\n"
-                            + "  Localização: " + res.getString(DBFIELDS[4]) + "\n"
-                            + "  Data de Cadastro: " + res.getString(DBFIELDS[1]) + "\n"
-                    );
+                    showRes(res);
+
                 } while (res.next());
             } else {
 
@@ -127,13 +123,7 @@ public class Read extends AppSetup {
             if (res.next()) {
 
                 // Se tem registro, exibe na view.
-                System.out.println(
-                        "ID: " + res.getString(DBFIELDS[0]) + "\n"
-                        + "  Nome: " + res.getString(DBFIELDS[2]) + "\n"
-                        + "  Descrição: " + res.getString(DBFIELDS[3]) + "\n"
-                        + "  Localização: " + res.getString(DBFIELDS[4]) + "\n"
-                        + "  Data de Cadastro: " + res.getString(DBFIELDS[1]) + "\n"
-                );
+                showRes(res);
             } else {
 
                 // Se não tem registro.

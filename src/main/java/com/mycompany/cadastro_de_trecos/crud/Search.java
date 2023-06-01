@@ -3,6 +3,7 @@ package com.mycompany.cadastro_de_trecos.crud;
 import static com.mycompany.cadastro_de_trecos.Cadastro_de_trecos.clearScreen;
 import static com.mycompany.cadastro_de_trecos.Cadastro_de_trecos.exitProgram;
 import static com.mycompany.cadastro_de_trecos.Cadastro_de_trecos.mainMenu;
+import static com.mycompany.cadastro_de_trecos.Tools.showRes;
 import com.mycompany.cadastro_de_trecos.db.DbConnection;
 import com.mycompany.cadastro_de_trecos.setup.AppSetup;
 import java.sql.SQLException;
@@ -39,15 +40,12 @@ public class Search extends AppSetup {
         try {
 
             // Consulta o banco de dados.
-            // sql = "SELECT * FROM " + DBTABLE + " WHERE name LIKE '%" + searchString + "%' OR description LIKE '%" + searchString + "%'";
-            sql = "SELECT * FROM " + DBTABLE + " WHERE " + DBFIELDS[1] + " LIKE ? OR " + DBFIELDS[2] + " LIKE ? OR " + DBFIELDS[3] + " LIKE ? OR " + DBFIELDS[4] + " LIKE ? AND " + DBFIELDS[5] + " != '0'";
-            System.out.println(sql);
+            sql = "SELECT * FROM " + DBTABLE + " WHERE " + DBFIELDS[5] + " != '0' AND " + DBFIELDS[2] + " LIKE ? OR " + DBFIELDS[3] + " LIKE ? OR " + DBFIELDS[4] + " LIKE ?";
             conn = DbConnection.dbConnect();
             pstm = conn.prepareStatement(sql);
             pstm.setString(1, "%" + searchString + "%");
             pstm.setString(2, "%" + searchString + "%");
             pstm.setString(3, "%" + searchString + "%");
-            pstm.setString(4, "%" + searchString + "%");
             res = pstm.executeQuery();
 
             System.out.println(" ");
@@ -57,13 +55,7 @@ public class Search extends AppSetup {
                 do {
 
                     // Exibe registro na view.
-                    System.out.println(
-                            "ID: " + res.getString(DBFIELDS[0]) + "\n"
-                            + "  Nome: " + res.getString(DBFIELDS[2]) + "\n"
-                            + "  Descrição: " + res.getString(DBFIELDS[3]) + "\n"
-                            + "  Localização: " + res.getString(DBFIELDS[4]) + "\n"
-                            + "  Data de Cadastro: " + res.getString(DBFIELDS[1]) + "\n"
-                    );
+                    showRes(res);
                 } while (res.next());
             } else {
 

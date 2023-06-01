@@ -8,17 +8,18 @@ import static com.mycompany.cadastro_de_trecos.Tools.showRes;
 import com.mycompany.cadastro_de_trecos.db.DbConnection;
 import com.mycompany.cadastro_de_trecos.setup.AppSetup;
 
-public class Delete extends AppSetup {
+public class LockUnlock extends AppSetup {
 
-    public static void delete() {
+    public static void lockUnlock() {
 
         // Reserva recursos para o banco de dados.
         int id = 0;
         String sql;
+        String newStatus;
 
         // Cabeçalho da seção.
         System.out.println(appName + "\n" + appSep);
-        System.out.println("Apaga um registro");
+        System.out.println("Bloqueia/desbloqueia um registro");
         System.out.println(appSep);
 
         try {
@@ -35,13 +36,13 @@ public class Delete extends AppSetup {
             // Quando opção é inválida.
             clearScreen();
             System.out.println("Oooops! Opção inválida!\n");
-            delete();
+            lockUnlock();
         }
 
         try {
 
             // Verifica se o registro existe.
-            sql = "SELECT * FROM " + DBTABLE + " WHERE id = ? AND " + DBFIELDS[5] + " = '2'";
+            sql = "SELECT * FROM " + DBTABLE + " WHERE id = ? AND " + DBFIELDS[5] + " != '0'";
             conn = DbConnection.dbConnect();
             pstm = conn.prepareStatement(sql);
             pstm.setInt(1, id);
@@ -52,16 +53,28 @@ public class Delete extends AppSetup {
                 // Se tem registro, exibe na view.
                 showRes(res);
 
-                System.out.print("Tem certeza que deseja apagar o registro? [s/N] ");
+                if (res.getString("status").equals("1")) {
+                    System.out.print("Tem certeza que deseja ativar o registro? [s/N] ");
+                    newStatus = "2";
+                } else {
+                    System.out.print("Tem certeza que deseja bloquear o registro? [s/N] ");
+                    newStatus = "1";
+                }
                 if (scanner.next().trim().toLowerCase().equals("s")) {
 
-                    sql = "UPDATE " + DBTABLE + " SET " + DBFIELDS[5] + " = '0' WHERE id = ?";
+                    sql = "UPDATE " + DBTABLE + " SET " + DBFIELDS[5] + " = ? WHERE id = ?";
                     System.out.println(id);
                     pstm = conn.prepareStatement(sql);
-                    pstm.setInt(1, id);
+                    pstm.setString(1, newStatus);
+                    pstm.setInt(2, id);
+
                     if (pstm.executeUpdate() == 1) {
                         // Registro apagado.
-                        System.out.println("\nRegistro apagado!");
+                        if (newStatus.equals("2")) {
+                            System.out.println("\nRegistro ativado!");
+                        } else {
+                            System.out.println("\nRegistro bloqueado!");
+                        }
                     } else {
                         System.out.println("Oooops! Algo deu errado!");
                     }
@@ -72,7 +85,7 @@ public class Delete extends AppSetup {
             } else {
                 clearScreen();
                 System.out.println("Oooops! Não achei nada!\n");
-                delete();
+                lockUnlock();
             }
 
             // Fecha banco de dados.
@@ -80,7 +93,7 @@ public class Delete extends AppSetup {
 
             // Menu inferior da seção.
             System.out.println(appSep);
-            System.out.println("Menu:\n\t[1] Menu principal\n\t[2] Apagar outro\n\t[0] Sair");
+            System.out.println("Menu:\n\t[1] Menu principal\n\t[2] Bloquear/desbloquear outro\n\t[0] Sair");
             System.out.println(appSep);
 
             // Recebe opção do teclado.            
@@ -97,12 +110,12 @@ public class Delete extends AppSetup {
                 }
                 case "2" -> {
                     clearScreen();
-                    delete();
+                    lockUnlock();
                 }
                 default -> {
                     clearScreen();
                     System.out.println("Oooops! Opção inválida!\n");
-                    delete();
+                    lockUnlock();
                 }
             }
 
@@ -114,5 +127,3 @@ public class Delete extends AppSetup {
         }
 
     }
-
-}
