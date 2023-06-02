@@ -7,6 +7,7 @@ import static com.mycompany.cadastro_de_trecos.Tools.showRes;
 import com.mycompany.cadastro_de_trecos.db.DbConnection;
 import com.mycompany.cadastro_de_trecos.setup.AppSetup;
 import java.sql.SQLException;
+import java.util.Scanner;
 
 public class Search extends AppSetup {
 // Lista todos os registros.
@@ -22,9 +23,10 @@ public class Search extends AppSetup {
 
         try {
 
-            // Recebe o Id do teclado.
+            // Recebe a palavra-chave do teclado.
+            Scanner kbd = new Scanner(System.in);
             System.out.print("Digite sua busca: ");
-            searchString = scanner.next().trim();
+            searchString = kbd.nextLine().trim();
             if (searchString.equals("")) {
                 clearScreen();
                 mainMenu();
@@ -40,7 +42,7 @@ public class Search extends AppSetup {
         try {
 
             // Consulta o banco de dados.
-            sql = "SELECT * FROM " + DBTABLE + " WHERE " + DBFIELDS[5] + " != '0' AND " + DBFIELDS[2] + " LIKE ? OR " + DBFIELDS[3] + " LIKE ? OR " + DBFIELDS[4] + " LIKE ?";
+            sql = "SELECT * FROM trecos WHERE status != 0 AND (nome LIKE ? OR descricao LIKE ? OR localizacao LIKE ?)";
             conn = DbConnection.dbConnect();
             pstm = conn.prepareStatement(sql);
             pstm.setString(1, "%" + searchString + "%");
