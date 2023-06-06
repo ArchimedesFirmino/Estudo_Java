@@ -1,10 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package com.mycompany.cadastro_de_trecos.gui;
 
-import com.mycompany.cadastro_de_trecos.db.DbConnection;
 import java.awt.CardLayout;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -14,12 +9,18 @@ import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.YES_NO_OPTION;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
+import com.mycompany.cadastro_de_trecos.db.DbConnection;
+import java.awt.HeadlessException;
+import java.sql.PreparedStatement;
 
-/**
- *
- * @author 16128412023.1
- */
 public class MainApp extends javax.swing.JFrame {
+
+    static Connection conn = DbConnection.dbConnect();
+    static PreparedStatement pstm = null;
+    static Statement stmt = null;
+    static ResultSet res = null;
+
+    static String sql;
 
     /**
      * Creates new form MainApp
@@ -37,269 +38,433 @@ public class MainApp extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        title = new javax.swing.JLabel();
-        mainPanel = new javax.swing.JPanel();
-        cardListAll = new javax.swing.JPanel();
+        jMenuItem1 = new javax.swing.JMenuItem();
         jLabel1 = new javax.swing.JLabel();
+        btnListAll = new javax.swing.JButton();
+        btnListById = new javax.swing.JButton();
+        btnCreate = new javax.swing.JButton();
+        btnEdit = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
+        btnExit = new javax.swing.JButton();
+        mainPanel = new javax.swing.JPanel();
+        panelListAll = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableListAll = new javax.swing.JTable();
-        cardIdList = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        cardRegister = new javax.swing.JPanel();
+        panelListById = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        cardEdit = new javax.swing.JPanel();
+        SearchId = new javax.swing.JTextField();
+        InsertId = new javax.swing.JTextField();
+        panelCreate = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        cardDelete = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jTextField2 = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        panelEdit = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        listAllButton = new javax.swing.JButton();
-        idListButton = new javax.swing.JButton();
-        registerButton = new javax.swing.JButton();
-        editButton = new javax.swing.JButton();
-        eraseButton = new javax.swing.JButton();
-        exitButton = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        txtId = new javax.swing.JTextField();
+        txtData = new javax.swing.JTextField();
+        txtNome = new javax.swing.JTextField();
+        txtDescricao = new javax.swing.JTextField();
+        txtLocalizacao = new javax.swing.JTextField();
+        btnAtualizar = new javax.swing.JButton();
+        panelDelete = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+
+        jMenuItem1.setText("jMenuItem1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cadastro de Trecos");
         setPreferredSize(new java.awt.Dimension(640, 480));
 
-        title.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        title.setText("Cadastro de trecos");
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Cadastro de Trecos");
+
+        btnListAll.setText("Listar todos");
+        btnListAll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnListAllActionPerformed(evt);
+            }
+        });
+
+        btnListById.setText("Listar pelo Id");
+        btnListById.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnListByIdActionPerformed(evt);
+            }
+        });
+
+        btnCreate.setText("Cadastrar");
+        btnCreate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCreateActionPerformed(evt);
+            }
+        });
+
+        btnEdit.setText("Editar");
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditActionPerformed(evt);
+            }
+        });
+
+        btnDelete.setText("Apagar");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
+
+        btnExit.setText("Sair");
+        btnExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExitActionPerformed(evt);
+            }
+        });
 
         mainPanel.setLayout(new java.awt.CardLayout());
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel1.setText("listar todos");
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel2.setText("Listar Todos");
 
         tableListAll.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "ID", "Nome", "Descrição"
+                "ID", "Data", "Nome", "Descrição", "Localização", "Status"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tableListAll.setRowHeight(30);
         tableListAll.setShowGrid(true);
         jScrollPane1.setViewportView(tableListAll);
         if (tableListAll.getColumnModel().getColumnCount() > 0) {
-            tableListAll.getColumnModel().getColumn(0).setMinWidth(40);
             tableListAll.getColumnModel().getColumn(0).setPreferredWidth(40);
-            tableListAll.getColumnModel().getColumn(0).setMaxWidth(100);
-            tableListAll.getColumnModel().getColumn(1).setMinWidth(50);
-            tableListAll.getColumnModel().getColumn(1).setPreferredWidth(200);
-            tableListAll.getColumnModel().getColumn(1).setMaxWidth(300);
-            tableListAll.getColumnModel().getColumn(2).setMinWidth(100);
-            tableListAll.getColumnModel().getColumn(2).setPreferredWidth(500);
-            tableListAll.getColumnModel().getColumn(2).setMaxWidth(600);
+            tableListAll.getColumnModel().getColumn(1).setPreferredWidth(120);
+            tableListAll.getColumnModel().getColumn(2).setMinWidth(50);
+            tableListAll.getColumnModel().getColumn(2).setPreferredWidth(100);
+            tableListAll.getColumnModel().getColumn(2).setMaxWidth(300);
+            tableListAll.getColumnModel().getColumn(3).setPreferredWidth(300);
+            tableListAll.getColumnModel().getColumn(4).setPreferredWidth(100);
+            tableListAll.getColumnModel().getColumn(5).setPreferredWidth(60);
         }
 
-        javax.swing.GroupLayout cardListAllLayout = new javax.swing.GroupLayout(cardListAll);
-        cardListAll.setLayout(cardListAllLayout);
-        cardListAllLayout.setHorizontalGroup(
-            cardListAllLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(cardListAllLayout.createSequentialGroup()
+        javax.swing.GroupLayout panelListAllLayout = new javax.swing.GroupLayout(panelListAll);
+        panelListAll.setLayout(panelListAllLayout);
+        panelListAllLayout.setHorizontalGroup(
+            panelListAllLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelListAllLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(cardListAllLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 616, Short.MAX_VALUE)
-                    .addGroup(cardListAllLayout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addGroup(panelListAllLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(panelListAllLayout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 872, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
-        cardListAllLayout.setVerticalGroup(
-            cardListAllLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(cardListAllLayout.createSequentialGroup()
+        panelListAllLayout.setVerticalGroup(
+            panelListAllLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelListAllLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        mainPanel.add(cardListAll, "cardListAll");
+        mainPanel.add(panelListAll, "cardListAll");
 
-        jLabel2.setText("listar pelo id");
+        jLabel3.setText("Listar pelo Id");
 
-        javax.swing.GroupLayout cardIdListLayout = new javax.swing.GroupLayout(cardIdList);
-        cardIdList.setLayout(cardIdListLayout);
-        cardIdListLayout.setHorizontalGroup(
-            cardIdListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, cardIdListLayout.createSequentialGroup()
-                .addContainerGap(292, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addGap(272, 272, 272))
+        SearchId.setText("Digite o ID :");
+        SearchId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SearchIdActionPerformed(evt);
+            }
+        });
+
+        InsertId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                InsertIdActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelListByIdLayout = new javax.swing.GroupLayout(panelListById);
+        panelListById.setLayout(panelListByIdLayout);
+        panelListByIdLayout.setHorizontalGroup(
+            panelListByIdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelListByIdLayout.createSequentialGroup()
+                .addGroup(panelListByIdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelListByIdLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelListByIdLayout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addComponent(SearchId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(InsertId, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(617, Short.MAX_VALUE))
         );
-        cardIdListLayout.setVerticalGroup(
-            cardIdListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(cardIdListLayout.createSequentialGroup()
-                .addGap(107, 107, 107)
-                .addComponent(jLabel2)
-                .addContainerGap(278, Short.MAX_VALUE))
-        );
-
-        mainPanel.add(cardIdList, "cardIdList");
-
-        jLabel3.setText("cadastrar");
-
-        javax.swing.GroupLayout cardRegisterLayout = new javax.swing.GroupLayout(cardRegister);
-        cardRegister.setLayout(cardRegisterLayout);
-        cardRegisterLayout.setHorizontalGroup(
-            cardRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, cardRegisterLayout.createSequentialGroup()
-                .addContainerGap(376, Short.MAX_VALUE)
+        panelListByIdLayout.setVerticalGroup(
+            panelListByIdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelListByIdLayout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jLabel3)
-                .addGap(204, 204, 204))
-        );
-        cardRegisterLayout.setVerticalGroup(
-            cardRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(cardRegisterLayout.createSequentialGroup()
-                .addGap(119, 119, 119)
-                .addComponent(jLabel3)
-                .addContainerGap(266, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(panelListByIdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(SearchId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(InsertId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(339, Short.MAX_VALUE))
         );
 
-        mainPanel.add(cardRegister, "cardRegister");
+        mainPanel.add(panelListById, "cardListById");
 
-        jLabel4.setText("editar");
+        jLabel4.setText("Cadastrar");
 
-        javax.swing.GroupLayout cardEditLayout = new javax.swing.GroupLayout(cardEdit);
-        cardEdit.setLayout(cardEditLayout);
-        cardEditLayout.setHorizontalGroup(
-            cardEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(cardEditLayout.createSequentialGroup()
-                .addGap(271, 271, 271)
+        jLabel7.setText("Nome:");
+
+        jLabel8.setText("Descrição:");
+
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Cadastrar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelCreateLayout = new javax.swing.GroupLayout(panelCreate);
+        panelCreate.setLayout(panelCreateLayout);
+        panelCreateLayout.setHorizontalGroup(
+            panelCreateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelCreateLayout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jLabel4)
-                .addContainerGap(327, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(panelCreateLayout.createSequentialGroup()
+                .addContainerGap(152, Short.MAX_VALUE)
+                .addGroup(panelCreateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelCreateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1)
+                    .addGroup(panelCreateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jTextField1)
+                        .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE)))
+                .addContainerGap(150, Short.MAX_VALUE))
         );
-        cardEditLayout.setVerticalGroup(
-            cardEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(cardEditLayout.createSequentialGroup()
-                .addGap(143, 143, 143)
+        panelCreateLayout.setVerticalGroup(
+            panelCreateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelCreateLayout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jLabel4)
-                .addContainerGap(242, Short.MAX_VALUE))
+                .addGap(68, 68, 68)
+                .addGroup(panelCreateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(panelCreateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
+                .addContainerGap(208, Short.MAX_VALUE))
         );
 
-        mainPanel.add(cardEdit, "cardEdit");
+        mainPanel.add(panelCreate, "cardCreate");
 
-        jLabel5.setText("apagar");
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel5.setText("Editar Registro");
 
-        javax.swing.GroupLayout cardDeleteLayout = new javax.swing.GroupLayout(cardDelete);
-        cardDelete.setLayout(cardDeleteLayout);
-        cardDeleteLayout.setHorizontalGroup(
-            cardDeleteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, cardDeleteLayout.createSequentialGroup()
-                .addContainerGap(345, Short.MAX_VALUE)
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel9.setText("Id:");
+
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel10.setText("Data:");
+
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel11.setText("Nome:");
+
+        jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel12.setText("Descrição:");
+
+        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel13.setText("Localização:");
+
+        txtNome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNomeActionPerformed(evt);
+            }
+        });
+
+        btnAtualizar.setText("Atualizar");
+        btnAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtualizarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelEditLayout = new javax.swing.GroupLayout(panelEdit);
+        panelEdit.setLayout(panelEditLayout);
+        panelEditLayout.setHorizontalGroup(
+            panelEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelEditLayout.createSequentialGroup()
+                .addGroup(panelEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelEditLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel5))
+                    .addGroup(panelEditLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(panelEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(27, 27, 27)
+                        .addGroup(panelEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnAtualizar)
+                            .addGroup(panelEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(panelEditLayout.createSequentialGroup()
+                                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(44, 44, 44)
+                                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtNome)
+                                .addComponent(txtDescricao)
+                                .addComponent(txtLocalizacao)))))
+                .addContainerGap(313, Short.MAX_VALUE))
+        );
+        panelEditLayout.setVerticalGroup(
+            panelEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelEditLayout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jLabel5)
-                .addGap(247, 247, 247))
+                .addGap(18, 18, 18)
+                .addGroup(panelEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(panelEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(panelEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(panelEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtLocalizacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(31, 31, 31)
+                .addComponent(btnAtualizar)
+                .addContainerGap(156, Short.MAX_VALUE))
         );
-        cardDeleteLayout.setVerticalGroup(
-            cardDeleteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(cardDeleteLayout.createSequentialGroup()
-                .addGap(111, 111, 111)
-                .addComponent(jLabel5)
-                .addContainerGap(274, Short.MAX_VALUE))
+
+        mainPanel.add(panelEdit, "cardEdit");
+
+        jLabel6.setText("Apagar");
+
+        javax.swing.GroupLayout panelDeleteLayout = new javax.swing.GroupLayout(panelDelete);
+        panelDelete.setLayout(panelDeleteLayout);
+        panelDeleteLayout.setHorizontalGroup(
+            panelDeleteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelDeleteLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel6)
+                .addContainerGap(840, Short.MAX_VALUE))
+        );
+        panelDeleteLayout.setVerticalGroup(
+            panelDeleteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelDeleteLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel6)
+                .addContainerGap(379, Short.MAX_VALUE))
         );
 
-        mainPanel.add(cardDelete, "cardDelete");
-
-        listAllButton.setText("Listar todos");
-        listAllButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                listAllButtonActionPerformed(evt);
-            }
-        });
-
-        idListButton.setText("Listar pelo ID");
-        idListButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                idListButtonActionPerformed(evt);
-            }
-        });
-
-        registerButton.setText("Cadastrar");
-        registerButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                registerButtonActionPerformed(evt);
-            }
-        });
-
-        editButton.setText("Editar");
-        editButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editButtonActionPerformed(evt);
-            }
-        });
-
-        eraseButton.setText("Apagar");
-        eraseButton.setName("Cadastro de Trecos"); // NOI18N
-        eraseButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                eraseButtonActionPerformed(evt);
-            }
-        });
-
-        exitButton.setText("Sair");
-        exitButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                exitButtonActionPerformed(evt);
-            }
-        });
+        mainPanel.add(panelDelete, "cardDelete");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(title, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(listAllButton, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(idListButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(registerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(editButton, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(8, 8, 8)
-                        .addComponent(eraseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(131, 131, 131)
+                        .addComponent(btnListAll, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnListById)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(title)
+                .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(listAllButton)
-                    .addComponent(idListButton)
-                    .addComponent(registerButton)
-                    .addComponent(editButton)
-                    .addComponent(eraseButton)
-                    .addComponent(exitButton))
+                    .addComponent(btnListAll)
+                    .addComponent(btnListById)
+                    .addComponent(btnCreate)
+                    .addComponent(btnEdit)
+                    .addComponent(btnDelete)
+                    .addComponent(btnExit))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        setSize(new java.awt.Dimension(656, 488));
+        setSize(new java.awt.Dimension(912, 488));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
-        CardLayout card = (CardLayout) mainPanel.getLayout();        // TODO add your handling code here:
-        card.show(mainPanel, "cardRegister");// TODO add your handling code here:
-    }//GEN-LAST:event_registerButtonActionPerformed
+    private void btnListByIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListByIdActionPerformed
+        CardLayout card = (CardLayout) mainPanel.getLayout();
+        card.show(mainPanel, "cardListById");
+    }//GEN-LAST:event_btnListByIdActionPerformed
 
-    private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
+    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
         UIManager.put("OptionPane.yesButtonText", "Sim");
         UIManager.put("OptionPane.noButtonText", "Não");
         int option = JOptionPane.showConfirmDialog(
@@ -310,28 +475,62 @@ public class MainApp extends javax.swing.JFrame {
         );
         if (option == 0) {
             System.exit(0);
+            DbConnection.dbClose(res, stmt, pstm, conn);
         }
-    }//GEN-LAST:event_exitButtonActionPerformed
+    }//GEN-LAST:event_btnExitActionPerformed
 
-    private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
-        CardLayout card = (CardLayout) mainPanel.getLayout();        // TODO add your handling code here:
-        card.show(mainPanel, "cardEdit");// TODO add your handling code here:
-    }//GEN-LAST:event_editButtonActionPerformed
-
-    private void listAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listAllButtonActionPerformed
-        CardLayout card = (CardLayout) mainPanel.getLayout();        // TODO add your handling code here:
+    private void btnListAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListAllActionPerformed
+        CardLayout card = (CardLayout) mainPanel.getLayout();
         card.show(mainPanel, "cardListAll");
-    }//GEN-LAST:event_listAllButtonActionPerformed
+    }//GEN-LAST:event_btnListAllActionPerformed
 
-    private void idListButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idListButtonActionPerformed
-        CardLayout card = (CardLayout) mainPanel.getLayout();        // TODO add your handling code here:
-        card.show(mainPanel, "cardIdList");// TODO add your handling code here:
-    }//GEN-LAST:event_idListButtonActionPerformed
+    private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
+        CardLayout card = (CardLayout) mainPanel.getLayout();
+        card.show(mainPanel, "cardCreate");
+    }//GEN-LAST:event_btnCreateActionPerformed
 
-    private void eraseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eraseButtonActionPerformed
-        CardLayout card = (CardLayout) mainPanel.getLayout();        // TODO add your handling code here:
-        card.show(mainPanel, "cardDelete");// TODO add your handling code here:
-    }//GEN-LAST:event_eraseButtonActionPerformed
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        //Se retornou um id da tabela,abre o card.
+        // Se retornou um ID da tabela, abre o card.        
+        int selected = loadSelected("edit");
+        if (selected > 0) {
+            CardLayout card = (CardLayout) mainPanel.getLayout();
+            card.show(mainPanel, "cardEdit");
+            edit(selected);
+        }
+    }//GEN-LAST:event_btnEditActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        CardLayout card = (CardLayout) mainPanel.getLayout();
+        card.show(mainPanel, "cardDelete");
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // SELECT
+
+        jTextField1.setText("Mala");
+        jTextField2.setText("Coisa");
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void SearchIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchIdActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SearchIdActionPerformed
+
+    private void InsertIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InsertIdActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_InsertIdActionPerformed
+
+    private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAtualizarActionPerformed
+
+    private void txtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNomeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -370,47 +569,80 @@ public class MainApp extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel cardDelete;
-    private javax.swing.JPanel cardEdit;
-    private javax.swing.JPanel cardIdList;
-    private javax.swing.JPanel cardListAll;
-    private javax.swing.JPanel cardRegister;
-    private javax.swing.JButton editButton;
-    private javax.swing.JButton eraseButton;
-    private javax.swing.JButton exitButton;
-    private javax.swing.JButton idListButton;
+    private javax.swing.JTextField InsertId;
+    private javax.swing.JTextField SearchId;
+    private javax.swing.JButton btnAtualizar;
+    private javax.swing.JButton btnCreate;
+    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnEdit;
+    private javax.swing.JButton btnExit;
+    private javax.swing.JButton btnListAll;
+    private javax.swing.JButton btnListById;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton listAllButton;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
     private javax.swing.JPanel mainPanel;
-    private javax.swing.JButton registerButton;
+    private javax.swing.JPanel panelCreate;
+    private javax.swing.JPanel panelDelete;
+    private javax.swing.JPanel panelEdit;
+    private javax.swing.JPanel panelListAll;
+    private javax.swing.JPanel panelListById;
     private static javax.swing.JTable tableListAll;
-    private javax.swing.JLabel title;
+    private javax.swing.JTextField txtData;
+    private javax.swing.JTextField txtDescricao;
+    private javax.swing.JTextField txtId;
+    private javax.swing.JTextField txtLocalizacao;
+    private static javax.swing.JTextField txtNome;
     // End of variables declaration//GEN-END:variables
 
-public static void listAll() {
+    public static void listAll() {
         try {
-            String sql = "SELECT * FROM things";
-            Connection conn = DbConnection.dbConnect();
+            String sql = "SELECT *, DATE_FORMAT(data,'%d/%m/%Y às %H:%i') AS databr "
+                    + "FROM trecos "
+                    + "WHERE status != '0' "
+                    + "ORDER BY nome ASC";
             Statement stmt = conn.createStatement();
             ResultSet res = stmt.executeQuery(sql);
 
             DefaultTableModel model = (DefaultTableModel) tableListAll.getModel();
             model.setNumRows(0);
 
+            String viewStatus;
+
             while (res.next()) {
+                // Pega o Status do registro
+                if (res.getString("status").equals("1")) {
+                    //Se o status for "1" está bloqueado
+                    viewStatus = "BLOQUEADO";
+                } else {
+                    //Se o status for diferente de "1" está ativo
+                    viewStatus = "ATIVO";
+                }
+                // Carrega os dados dos registros               
                 model.addRow(new Object[]{
                     res.getString("id"),
-                    res.getString("name"),
-                    res.getString("description")
+                    res.getString("databr"),
+                    res.getString("nome"),
+                    res.getString("descricao"),
+                    res.getString("localizacao"),
+                    viewStatus
                 });
             }
-            
-            DbConnection.dbClose(res, stmt, null, conn);
 
         } catch (SQLException error) {
             // Tratamento de erros.
@@ -419,8 +651,58 @@ public static void listAll() {
         }
     }
 
+    // Carrega o registro selecionado na tabela
+    private int loadSelected(String myAction) {
+        try {
 
+            // Obtém a linha selecionada na tabela
+            int selected = tableListAll.getSelectedRow();
 
+            if (selected < 0) {
+                JOptionPane.showMessageDialog(null, "Selecione um item na tabela.");
+                return 0;
+            } else {
 
+                String selectedId = (String) tableListAll.getModel().getValueAt(selected, 0);
+                int id = Integer.parseInt(selectedId);
+
+                sql = "SELECT status FROM trecos WHERE id = ?";
+                pstm = conn.prepareStatement(sql);
+                pstm.setInt(1, id);
+                res = pstm.executeQuery();
+                if (res.next()) {
+                    if (res.getString("status").equals("2") && myAction.equals("edit")) {
+                        return id;
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Registro está bloqueado e não pode ser editado!");
+                        return 0;
+                    }
+                }
+            }
+
+        } catch (SQLException | HeadlessException | NumberFormatException error) {
+            System.out.println("Oooopss! " + error.getMessage());
+        }
+        return 0;
+    }
+
+    public static void edit(int id) {
+
+        try {
+
+            sql = "SELECT *, DATE_FORMAT(data, '%d/%m/%Y Às %H:%i') AS databr "
+                    + "FROM trecos "
+                    + "WHERE status = '2' AND id = ?";
+            pstm = conn.prepareStatement(sql);
+            pstm.setInt(1, id);
+            res = pstm.executeQuery();
+            if (res.next()) {
+                System.out.println(res.getString("nome"));
+            }
+
+        } catch (SQLException error) {
+            System.out.println("Oooops! " + error.getMessage());
+        }
+
+    }
 }
-
